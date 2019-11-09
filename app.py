@@ -1,62 +1,46 @@
 import csv
 from random import random
-
 songs = []
 artists = []
+# name = input("Name: ")
+# password = input("Password: ")
+#
+# if name != "Thomas" or password != "password":
+#     print("Sorry you are not authorised or you have the password incorrect")
+#     quit()
+#
+# if name == "Thomas" and password == "password":
+#     print("Hello", name + ', welcome to the music quiz game!')
 
-total_songs = 0
-total_duplicates = 0
-count = 0
-
-with open('newtop200songs.csv', 'r') as csv_file:
+with open('playlist.csv', 'r') as csv_file:
     csv_reader = csv.reader(csv_file)
-    next(csv_reader)  # skip past field names
+    next(csv_reader)
     for line in csv_reader:
-        count += 1
-        print(count)
         if line[0] not in songs:
             songs.append(line[0])
             artists.append(line[1])
-            total_songs += 1
-            print('added song - ' + line[0])
-        else:
-            print('found duplicate - ' + line[0])
-            total_duplicates += 1
 
-count = 0
-print("SONGS")
-for song in songs:
-    count += 1
-    print(count, song)
+score = 0
+round_no = 0
 
-print("ARTISTS")
-for artist in artists:
-    print(artist)
-
-print('count', count)
-print('len(songs)', len(songs))
-
-random_song_number = int(random()*len(songs))
-print(random_song_number)
-
-artist = artists[random_song_number]
-print('by', artist)
-
-random_song = songs[random_song_number]
-words_of_title = random_song.split()
-for word in words_of_title:
-    print(word[0])
-
-input()
-print(random_song)
-
-
-
-
-
-
-
-
-
-
+loop = True
+while loop:
+    round_no = round_no + 1
+    random_song_number = int(random() * len(songs))
+    random_song = songs[random_song_number]
+    artist = artists[random_song_number]
+    print('Round', round_no)
+    print('Artist:', artist)
+    words_of_title = random_song.split()
+    for word in words_of_title:
+        print(word[0])
+    guess = input("Song Name: ")
+    if guess == random_song:
+        score = score + 1
+        print('Correct! Your score is', score)
+        print('Next song...')
+        print('')
+    if guess != random_song:
+        print("Incorrect. Your score is", score)
+        break
 
